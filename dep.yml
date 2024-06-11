@@ -1,0 +1,48 @@
+- name: Provision a GCP VM
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    gcp_cred_file: "{{ lookup('env', 'GCP_SERVICE_ACCOUNT_FILE') }}"
+    gcp_project: velero-demo-418320 
+    machine_type: "e2-medium"
+    gcp_cred_kind: serviceaccount
+    instance_name: "my-vm-instance"
+    zone: "us-central1-a"
+    region: "us-central1"
+    machine_type: "e2-medium"
+    image: "https://www.googleapis.com/compute/v1/projects/rocky-linux-cloud/global/images/rocky-linux-8-optimized-gcp-v20230411" 
+
+  tasks:
+    - name: Create an external address associated with the instance
+      gcp_compute_address:
+        name: "{{ zone }}-ip"
+        region: "{{ region }}"
+        project: "{{ gcp_project }}"
+        service_account_file: "{{ gcp_cred_file }}"
+        auth_kind: "{{ gcp_cred_kind }}"
+      register: gce_ip
+
+    - name: Create the GCP VM
+      gcp_compute_instance:
+        name: "{{ instance_name }}"
+        machine_type: "{{ machine_type }}"
+        zone: "{{ zone }}"
+        project: "{{ gcp_project }}"
+        service_account_file: "{{ gcp_cred_file }}"
+        auth_kind: "{{ gcp_cred_kind }}"
+        disks:
+          - auto_delete: true
+            boot: true
+            initialize_params:
+              source_image: "{{ image }}"
+        network_interfaces:
+          - access_configs: # if you don't add this then the VM instance will have no external address attached to it
+              - name: External NAT
+                nat_ip: "{{ gce_ip }}"
+                type: ONE_TO_ONE_NAT
+      register: result
+
+    - name: Print the VM's IP address
+      debug:
+        var: gce_ip.address
