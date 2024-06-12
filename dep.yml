@@ -2,30 +2,15 @@
   hosts: localhost
   gather_facts: false
 
-vars:
-  gcp_cred_file: >
-    {
-      "type": "service_account",
-      "project_id": "velero-demo-418320",
-      "private_key_id": "30415b9eb66886cad773a76b39e128c826fd5a0f",
-      "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD0ScW6ovoZPA39\nBcYf6MzIVcJI1TjI0ykdAqXC/HQl7JAOK8vYdLTn01v2OJyUXXjG8r6GFPHyPFRR\njGOB3Tc1bElruCv1Xs1ESHcLQZ8xf+mxiocpfxbZY4Hdo0LQG9CaLA3TVU7gMP2C\ngbOSFX97oNV/ofnCahtJrgzYyaf2Jo18cxpPeqH9dtB3rc6zQ74jd7df1LsIQDvi\no0fYvMPQnaT5ZW/sIpV1yszRsUp3ItShpHMTicRS/XjQMKOGKdq+G3hAM4EYMOmG\nK9r3GbQqZJVXJY58FWARtisQ75ebJvaHIpmlXlZ1dtNW4bZ1IvDkIwAnI4SCiGR0\nCf/vF6EhAgMBAAECggEAK30SoUYwRdvGFbw4aCfWhPeXbcXfpQjKceqtvceZmcLC\nZnNvh6pHJlofLfcoENWPEcPXHSGPbPNGg3n9oPnTwUP00iNoV/c3jadk4fEduP8v\niDbEFyQT2kF3thBBbbD18uxSzcOLFihCiUAzypbfKhAY0e7w+qZPE0/T46gKqawc\nS74cva16FUXhPaeB5EQLNQqnWnvnYFb/Un/DYiADn9Vnp9Q4X8Uj1luysKcY2py7\neDdonk8wACWNPsVyM96bBqWjs7ZnDNGoKRqzeeKH2pN7NYnJ4WJ4kOsbfdmAGYnG\nPjdoNLxrBiLGnvjoq7rQWsvhnSglW7VBIu0vjP+XfQKBgQD7TTZNkz58knd/uCBt\nwkiuAl8WqACiNY9409HIkiXx4mw2Hxokv3goa4E1ywum2xxm9XkpG79A/1yDsymg\n2/OlYOP69U5YWPGKvZ7n47lw8AeLrazlHPuDa7qfrEM45A6wYmmmjntueWaj4m9i\niRwUcInnBEpayXdfn1DsD67iwwKBgQD42v4Iy7isbxnxJ/sZi9mzT9BzffuvDl16\nBfOp7xMmdItzhXI8lUZmYXlhClaGt8qGOh2115WJo4Ieuw/lyDBlY99iOuWgCsd0\n1zBoCW+gvlEP3whJSFx1KQdcxFd0ZK68lnqJXlxGIGdpO/pEjGRVS8SI6LTnMoDX\nAvhZOmDmSwKBgEBraqA4PqxwX3G+IZIBW+A/e2CzcHYkhMLUidKApHl9MYAuOOVy\nr7qs1FKV2kbLpFxAUO7Yzg47Z9va8bDqsWqTi92pRIwhQMnwEewf1Em/Pi/wNYIG\nC/OEijKkVhcfXySYFb08iSeot0cLpMH9o9UZhEBUOTtMqe05SeU5n/tBAoGBAIC8\nUTRdpzBU3Te69hQWG82+GVjVsJCzvrm0QIQFcIOxQL7HJvyeQGgQPslrnq1cgMGF\naP88AljMpDCflq7JK/gXfWUEkOuFB/+ynpEDaKLgMXEjcNbwPxxA2FUuIQvOVfKr\nacKMdPG2K6jt5R72/aR+aLJmp8b+glY4bB9EqwIXAoGADnfitIuQK2gY2b/MqNnX\nJ4jGnzlr4TmjB2/iYFeH0d6UTmC3rmCDswSHYits5JQXfkC7Dk4W8Ajsp4HE5Mlf\nTWAwhA0eIsQYas7WCuiQ3RokYpscDI3Om47iX70gh2GgVzhJfn5esckRaxJasTZ7\nTLWWJphoEJ7mw045uZ/YI68=\n-----END PRIVATE KEY-----\n",
-      "client_email": "556674978565-compute@developer.gserviceaccount.com",
-      "client_id": "105452997152906806889",
-      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-      "token_uri": "https://oauth2.googleapis.com/token",
-      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-      "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/556674978565-compute%40developer.gserviceaccount.com",
-      "universe_domain": "googleapis.com"
-    }
-  gcp_project: velero-demo-418320 
-  machine_type: "e2-medium"
-  gcp_cred_kind: serviceaccount
-  instance_name: "my-vm-instance"
-  zone: "us-central1-a"
-  region: "us-central1"
-  machine_type: "e2-medium"
-
-  image: "https://www.googleapis.com/compute/v1/projects/rocky-linux-cloud/global/images/rocky-linux-8-optimized-gcp-v20230411" 
+  vars:
+    gcp_project: velero-demo-418320 
+    machine_type: "e2-medium"
+    gcp_cred_kind: serviceaccount
+    instance_name: "my-vm-instance"
+    zone: "us-central1-a"
+    region: "us-central1"
+    machine_type: "e2-medium"
+    image: "https://www.googleapis.com/compute/v1/projects/rocky-linux-cloud/global/images/rocky-linux-8-optimized-gcp-v20230411" 
 
   tasks:
     - name: Create an external address associated with the instance
