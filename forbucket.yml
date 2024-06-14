@@ -1,0 +1,17 @@
+---
+- name: Create a bucket on GCP
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Create GCP bucket
+      google.cloud.gcp_storage_bucket:
+        name: yo-yo
+        state: present
+        project: velero-demo-418320 
+        auth_kind: serviceaccount
+        service_account_file: "{{ lookup('env', 'GCP_SERVICE_ACCOUNT_FILE') }}"
+      register: bucket_result
+
+    - name: Print bucket creation result
+      debug:
+        var: bucket_result
