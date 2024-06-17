@@ -1,0 +1,24 @@
+---
+- name: Create an S3 bucket
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars:
+    bucket_name: mygg23   # Ensure this is globally unique
+    region: us-east-1                       # Specify the region
+    
+    
+  tasks:
+    - name: Create S3 bucket
+      amazon.aws.s3_bucket:
+        name: "{{ bucket_name }}"
+        region: "{{ region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        state: present
+      register: s3
+
+    - name: Display bucket creation result
+      debug:
+        msg: "Bucket {{ bucket_name }} created in region {{ region }}"
