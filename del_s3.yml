@@ -1,0 +1,35 @@
+---
+- name: Delete an S3 bucket
+  hosts: localhost
+  gather_facts: False
+  vars:
+    aws_region: "us-east-1"
+    s3_bucket_name: "mygg23"
+
+  tasks:
+    - name: List objects in the S3 bucket
+      amazon.aws.s3_bucket_info:
+        name: "{{ s3_bucket_name }}"
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      register: s3_objects
+
+    - name: Delete objects in the S3 bucket
+      amazon.aws.s3_object:
+        bucket: "{{ s3_bucket_name }}"
+        key: "{{ item.key }}"
+        state: absent
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      loop: "{{ s3_objects.contents }}"
+      when: s3_objects.contents is defined
+
+    - name: Delete the S3 bucket
+      amazon.aws.s3_bucket:
+        name: "{{ s3_bucket_name }}"
+        state: absent
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
